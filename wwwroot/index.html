@@ -25,6 +25,22 @@
         Drag and drop a file into this area
     </div>
 
+    <br/><br/><br/><br/>
+
+    <div>
+        <form class="form" id="uploadForm">
+            <input type="file" name="file" id="file" /><br/>
+            <input type="submit" class="button" value="Upload" 
+                onchange="uploadFiles('file')"/>
+        </form>
+    
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-bar-fill">
+                <span class="progress-bar-text">0%</span>
+            </div>
+        </div>
+    </div>
+
     <script src="/js/main.js"></script>
 
 </body>

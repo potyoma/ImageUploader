@@ -74,3 +74,24 @@ body {
   .drag-and-drop-area-dragging {
     background: #f5f5f5;
   }
+
+  .progress-bar {
+    height: 35px;
+    width: 250px;
+    border: 2px solid darkblue;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: lightblue;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    transition: width 0.25s;
+}
+
+.progress-bar-text {
+    margin-left: 10px;
+    font-weight: bold;
+}

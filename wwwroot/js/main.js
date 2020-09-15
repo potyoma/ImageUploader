@@ -1,21 +1,54 @@
+// This is working.
+
 const apiUrl = "/api/uploadscontroller";
+const progressBarFill = document.querySelector(
+    "#progressBar > .progress-bar-fill");
+const progressBarText = progressBarFill.querySelector(".progress-bar-text");
+
+function transferWithAjax(url, formData) {
+    $.ajax({
+        url: url,
+        data: formData,
+        processData: false,
+        contentType: false,
+        type: "POST",
+        /*xhr: function () {
+            // Upload progress.
+            var xhr = $.ajaxSettings.xhr();
+            xhr.upload.addEventListener("progress", function (event) {
+                let percent;
+
+                if (event.lengthComputable) {
+                    percent = (e.loaded / e.total) * 100;
+
+                    progressBarFill.style.width = percent.toFixed(2) + "%";
+                    progressBarText.textContent = percent.toFixed(2) + "%"
+                }
+                percent = 0;
+            }, false);
+            
+            return jqXHR;
+        },*/
+        success: function (data) {
+            alert("Files uploaded!");
+        }
+    });
+}
+// The rest should be changed.
+
 
 function uploadFiles(inputId) {
     let input = document.getElementById(inputId);
     let file = input.files[0];
     let formData = new FormData();
 
-    console.log(file);
-
     formData.append("uploadedFile", file);
-
-    console.log(formData);
 
     transferWithAjax(apiUrl, formData);
 }
 
 function initializeDragAndDropArea() {
-    if (typeof(window["FileReader"]) == "undefined") {
+    if (typeof (window["FileReader"]) == "undefined") {
         return;
     }
 
@@ -25,17 +58,17 @@ function initializeDragAndDropArea() {
         return;
     }
 
-    dragAndDropArea[0].ondragover = function() {
+    dragAndDropArea[0].ondragover = function () {
         dragAndDropArea.addClass("drag-and-drop-area-dragging");
         return false;
     }
 
-    dragAndDropArea[0].ondragleave = function() {
+    dragAndDropArea[0].ondragleave = function () {
         dragAndDropArea.removeClass("drag-and-drop-area-dragging");
         return false;
     }
 
-    dragAndDropArea[0].ondrop = function(event) {
+    dragAndDropArea[0].ondrop = function (event) {
         dragAndDropArea.removeClass("drag-and-drop-dragging");
 
         var formData = new FormData();
@@ -46,20 +79,7 @@ function initializeDragAndDropArea() {
     }
 }
 
-function transferWithAjax(url, formData) {
-    $.ajax({
-        url: url,
-        data: formData,
-        processData: false,
-        contentType: false,
-        type: "POST",
-        success: function(data) {
-            alert("Files uploaded!");
-        }
-    });
-}
-
 $(document).ready(
-    function() {
+    function () {
         initializeDragAndDropArea();
-});
+    });
