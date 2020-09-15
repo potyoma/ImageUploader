@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
 using System.IO;
+using TryingWebApi.Models;
 
 namespace TryingWebApi.Controllers
 {
@@ -10,12 +11,14 @@ namespace TryingWebApi.Controllers
     [Route("api/uploadscontroller")]
     public class UploadsController : ControllerBase
     {
+        private readonly FilesContext _db;
         private readonly IWebHostEnvironment _environment;
-        private string _id;
 
-        public UploadsController(IWebHostEnvironment environment)
+        public UploadsController(IWebHostEnvironment environment,
+            FilesContext db)
         {
             _environment = environment;
+            _db = db;
         }
 
         [HttpPost]
@@ -23,16 +26,21 @@ namespace TryingWebApi.Controllers
         {
             if (uploadedFile != null)
             {
-                _id = GetImageId().ToString();
-                string fileExtension = uploadedFile.FileName.Substring(
-                    uploadedFile.FileName.IndexOf('.'));;
+                string path =
+                    $"{_environment.WebRootPath}/Files/{uploadedFile.FileName}";
 
-                string path = $"/Files/Image{_id}.{fileExtension}";
+                _db.Files.Add(new FileModel
+                {
+                    Id = SetId(_environment.WebRootPath),
+                    Name = uploadedFile.FileName,
+                    Path = path
+                });
 
                 using (var fileStream = new FileStream(
-                    _environment.WebRootPath + path, FileMode.Create))
+                    path, FileMode.Create))
                 {
                     await uploadedFile.CopyToAsync(fileStream);
+                    await _db.SaveChangesAsync();
                 }
 
                 return Ok("You made it!");
@@ -41,15 +49,26 @@ namespace TryingWebApi.Controllers
             return BadRequest("File is empty");
         }
 
-        public int GetImageId()
+        public int SetId(string pathToUploads)
         {
             int id;
+            int countFiles = Directory.GetFiles(pathToUploads).Length;
 
-            string path = _environment.WebRootPath + "/Files/";
-            string[] files = Directory.GetFiles(path);
-            id = files.Length + 1;
+            if (countFiles > 20)
+            {
+                return 1;
+            }
 
+            id = Directory.GetFiles(pathToUploads).Length + 1;
             return id;
+        }
+
+        public bool DeleteExtraFile(string pathToUploads) 
+        {
+            // TODO: Find file by id
+            // TODO: Remove it
+            // TODO: Remove field in database
+            return false;
         }
     }
 }
