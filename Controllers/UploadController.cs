@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
 using System.IO;
-using System.Linq;
 
 namespace TryingWebApi.Controllers
 {
@@ -12,6 +11,7 @@ namespace TryingWebApi.Controllers
     public class UploadsController : ControllerBase
     {
         private readonly IWebHostEnvironment _environment;
+        private string _id;
 
         public UploadsController(IWebHostEnvironment environment)
         {
@@ -23,7 +23,11 @@ namespace TryingWebApi.Controllers
         {
             if (uploadedFile != null)
             {
-                string path = "/Files/" + uploadedFile.FileName;
+                _id = GetImageId().ToString();
+                string fileExtension = uploadedFile.FileName.Substring(
+                    uploadedFile.FileName.IndexOf('.'));;
+
+                string path = $"/Files/Image{_id}.{fileExtension}";
 
                 using (var fileStream = new FileStream(
                     _environment.WebRootPath + path, FileMode.Create))
@@ -31,10 +35,21 @@ namespace TryingWebApi.Controllers
                     await uploadedFile.CopyToAsync(fileStream);
                 }
 
-                return Ok("You finally made it!");
+                return Ok("You made it!");
             }
 
             return BadRequest("File is empty");
+        }
+
+        public int GetImageId()
+        {
+            int id;
+
+            string path = _environment.WebRootPath + "/Files/";
+            string[] files = Directory.GetFiles(path);
+            id = files.Length + 1;
+
+            return id;
         }
     }
 }

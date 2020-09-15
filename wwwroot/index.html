@@ -12,32 +12,28 @@
 </head>
 
 <body>
-    <h2>Upload Your Image</h2>
-    <form name="uploadForm">
+    
+    <div class="main-card">
         <div>
-            <input type="file" name="file" id="file" onchange="uploadFiles('file')" />
+            <h2>Upload your image</h2>
+            <p>File should be Jpeg, Png...</p>
         </div>
-    </form>
-
-    <br/><br/><br/><br/>
-
-    <div id="dragAndDropArea" class="drag-and-drop-area">
-        Drag and drop a file into this area
+        <div id="dragAndDropArea" class="drag-and-drop-area">
+            <img src="/images/mountains.svg" alt="Zone for drop" />
+            <p>Drag and drop your image here.</p>
+        </div>
+        <div>
+            <p>Or</p>
+            <label class="upload-button">
+                <input type="file" name="file" id="file" onchange="uploadFiles('file')" hidden/>
+                Choose a file
+            </label>
+        </div>
     </div>
 
-    <br/><br/><br/><br/>
-
-    <div>
-        <form class="form" id="uploadForm">
-            <input type="file" name="file" id="file" /><br/>
-            <input type="submit" class="button" value="Upload" 
-                onchange="uploadFiles('file')"/>
-        </form>
-    
-        <div class="progress-bar" id="progressBar">
-            <div class="progress-bar-fill">
-                <span class="progress-bar-text">0%</span>
-            </div>
+    <div class="progress-bar" id="progressBar">
+        <div class="progress-bar-fill">
+            <span class="progress-bar-text">0%</span>
         </div>
     </div>
 

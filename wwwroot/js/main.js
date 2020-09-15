@@ -12,14 +12,14 @@ function transferWithAjax(url, formData) {
         processData: false,
         contentType: false,
         type: "POST",
-        /*xhr: function () {
+        xhr: function () {
             // Upload progress.
             var xhr = $.ajaxSettings.xhr();
             xhr.upload.addEventListener("progress", function (event) {
                 let percent;
 
                 if (event.lengthComputable) {
-                    percent = (e.loaded / e.total) * 100;
+                    percent = (event.loaded / event.total) * 100;
 
                     progressBarFill.style.width = percent.toFixed(2) + "%";
                     progressBarText.textContent = percent.toFixed(2) + "%"
@@ -27,8 +27,8 @@ function transferWithAjax(url, formData) {
                 percent = 0;
             }, false);
             
-            return jqXHR;
-        },*/
+            return xhr;
+        },
         success: function (data) {
             alert("Files uploaded!");
         }

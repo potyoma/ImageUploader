@@ -22,18 +22,6 @@ body {
     font: normal 25px 'Open Sans', sans-serif;
   }
   
-  .field {
-    margin-top: 20px;
-  }
-  
-  .buttons {
-    margin-top: 20px;
-  }
-  
-  .iframe {
-    margin-top: 20px;
-  }
-  
   .upload-button {
     background: #f0f0f0;
     border-radius: 100px;
@@ -76,6 +64,7 @@ body {
   }
 
   .progress-bar {
+    display: none;
     height: 35px;
     width: 250px;
     border: 2px solid darkblue;
