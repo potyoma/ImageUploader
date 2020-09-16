@@ -16,7 +16,7 @@
     <div class="main-card">
         <div>
             <h2>Upload your image</h2>
-            <p>File should be Jpeg, Png...</p>
+            <p>File should be Jpeg, Png? Gif and CSV</p>
         </div>
         <div id="dragAndDropArea" class="drag-and-drop-area">
             <img src="/images/mountains.svg" alt="Zone for drop" />
@@ -25,7 +25,7 @@
         <div>
             <p>Or</p>
             <label class="upload-button">
-                <input type="file" name="file" id="file" onchange="uploadFiles('file')" hidden/>
+                <input type="file" accept=".jpg,.jpeg,.png,.gif,.csv" name="file" id="file" onchange="uploadFiles('file')" hidden/>
                 Choose a file
             </label>
         </div>

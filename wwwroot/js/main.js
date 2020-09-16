@@ -1,9 +1,10 @@
 // This is working.
 
-const apiUrl = "/api/uploadscontroller";
+const apiUrl = "/api/uploads";
 const progressBarFill = document.querySelector(
     "#progressBar > .progress-bar-fill");
 const progressBarText = progressBarFill.querySelector(".progress-bar-text");
+const mimeTypes = ["image/jpeg", "image/gif", "image/png", "image/svg+xml"];
 
 function transferWithAjax(url, formData) {
     $.ajax({
@@ -69,7 +70,14 @@ function initializeDragAndDropArea() {
     }
 
     dragAndDropArea[0].ondrop = function (event) {
+        event.preventDefault();
+
         dragAndDropArea.removeClass("drag-and-drop-dragging");
+
+        if (! mimeTypes.includes(event.dataTransfer.files[0].type))
+        {
+            return;
+        }
 
         var formData = new FormData();
 
