@@ -1,4 +1,4 @@
-const apiUrl = "/api/uploads";
+const apiUrl = window.location.href + "/api/uploads";
 const apiGetUrl = "api/get/";
 const progressBar = document.getElementById("progress-bar-screen")
 const uploadedImageScreen = document.getElementById("uploaded-image");
