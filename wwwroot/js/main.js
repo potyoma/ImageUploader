@@ -1,12 +1,16 @@
-// This is working.
-
 const apiUrl = "/api/uploads";
+const apiGetUrl = "api/get/";
+const progressBar = document.getElementById("progress-bar-screen")
+const uploadedImageScreen = document.getElementById("uploaded-image");
+const mainScreen = document.getElementById("main-card");
+const uploadedImageShow = document.getElementsByClassName("uploaded-image-show")[0];
 const progressBarFill = document.querySelector(
     "#progressBar > .progress-bar-fill");
 const progressBarText = progressBarFill.querySelector(".progress-bar-text");
 const mimeTypes = ["image/jpeg", "image/gif", "image/png", "image/svg+xml"];
+const linkForDownloading = document.getElementById("linkForDownloading");
 
-function transferWithAjax(url, formData) {
+function transferWithAjax(url, formData, fileName) {
     $.ajax({
         url: url,
         data: formData,
@@ -27,25 +31,28 @@ function transferWithAjax(url, formData) {
                 }
                 percent = 0;
             }, false);
-            
+
             return xhr;
         },
         success: function (data) {
-            alert("Files uploaded!");
+            progressBar.style.display = "none";
+            uploadedImageScreen.style.display = "block";
+            uploadedImageShow.style.backgroundImage = "url('Files/" + fileName + "')"
         }
     });
 }
-// The rest should be changed.
-
 
 function uploadFiles(inputId) {
     let input = document.getElementById(inputId);
     let file = input.files[0];
     let formData = new FormData();
 
-    formData.append("uploadedFile", file);
+    writeLinkToField(file.name);
 
-    transferWithAjax(apiUrl, formData);
+    formData.append("uploadedFile", file);
+    mainScreen.style.display = "none";
+    progressBar.style.display = "block";
+    transferWithAjax(apiUrl, formData, file.name);
 }
 
 function initializeDragAndDropArea() {
@@ -74,17 +81,45 @@ function initializeDragAndDropArea() {
 
         dragAndDropArea.removeClass("drag-and-drop-dragging");
 
-        if (! mimeTypes.includes(event.dataTransfer.files[0].type))
-        {
+        if (!mimeTypes.includes(event.dataTransfer.files[0].type)) {
             return;
         }
 
         var formData = new FormData();
 
-        formData.append("uploadedFile", event.dataTransfer.files[0]);
+        let file = event.dataTransfer.files[0];
 
-        transferWithAjax(apiUrl, formData);
+        formData.append("uploadedFile", file);
+
+        mainScreen.style.display = "none";
+        progressBar.style.display = "block";
+
+        writeLinkToField(file.name);
+        transferWithAjax(apiUrl, formData, file.name);
     }
+}
+
+function writeLinkToField(fileName) {
+    let selfUrl = window.location.href;
+    console.log(selfUrl);
+    linkForDownloading.value = selfUrl + apiGetUrl + fileName;
+}
+
+function copyToClipboard() {
+    var copyText = document.getElementById("linkForDownloading");
+
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+
+    document.execCommand("copy");
+
+    //alert("Copied the text: " + copyText.value);
+}
+
+function goHome() {
+    progressBar.style.display = "none";
+    uploadedImageScreen.style.display = "none";
+    mainScreen.style.display = "block";
 }
 
 $(document).ready(

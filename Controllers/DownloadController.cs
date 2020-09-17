@@ -40,16 +40,11 @@ namespace TryingWebApi.Controllers
                 }
                 memory.Position = 0;
                 string ext = Path.GetExtension(path);
-                DeleteDownloadedFile(path);
+                System.IO.File.Delete(path);
                 return File(memory, _mimeTypes[ext], fileName);
             }
 
             return BadRequest("No such file!");
-        }
-
-        private void DeleteDownloadedFile(string path)
-        {
-            System.IO.File.Delete(path);
         }
     }
 }

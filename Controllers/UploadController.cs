@@ -36,19 +36,5 @@ namespace TryingWebApi.Controllers
 
             return BadRequest("File is empty");
         }
-
-        public int SetId(string pathToUploads)
-        {
-            int id;
-            int countFiles = Directory.GetFiles(pathToUploads).Length;
-
-            if (countFiles > 20)
-            {
-                return 1;
-            }
-
-            id = Directory.GetFiles(pathToUploads).Length + 1;
-            return id;
-        }
     }
 }

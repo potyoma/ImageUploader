@@ -3,39 +3,55 @@
 
 <head>
     <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Upload file</title>
+    <link rel="shortcut icon" href="images/title.ico" type="image/x-icon">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet"> 
     <link rel='stylesheet' href='css/main.css'>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-
 <body>
-    
-    <div class="main-card">
+    <!--Upload image screen-->
+    <div class="main-card" id="main-card">
         <div>
-            <h2>Upload your image</h2>
-            <p>File should be Jpeg, Png? Gif and CSV</p>
+            <h2 class="upload-main-card">Upload your image</h2>
+            <p class="files-main-card">File should be Jpeg, Png, Gif or CSV</p>
         </div>
+        <!--Drag and drop area-->
         <div id="dragAndDropArea" class="drag-and-drop-area">
-            <img src="/images/mountains.svg" alt="Zone for drop" />
-            <p>Drag and drop your image here.</p>
+            <img src="images/mountains.svg" alt="Zone for drop" class="mountains-image"/>
+            <p class="drag-drop-area">Drag and drop your image here.</p>
         </div>
         <div>
-            <p>Or</p>
+            <p class="drag-drop-area-or">Or</p>
             <label class="upload-button">
-                <input type="file" accept=".jpg,.jpeg,.png,.gif,.csv" name="file" id="file" onchange="uploadFiles('file')" hidden/>
+                <input type="file" accept=".jpg,.jpeg,.png,.gif,.csv" name="file" id="file"
+                    onchange="uploadFiles('file')" hidden />
                 Choose a file
             </label>
         </div>
     </div>
 
-    <div class="progress-bar" id="progressBar">
-        <div class="progress-bar-fill">
-            <span class="progress-bar-text">0%</span>
+    <!--Progress bar screen-->
+    <div class="progress-bar-screen" id="progress-bar-screen">
+        <h2>Uploading...</h2>
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-bar-fill">
+                <span class="progress-bar-text">0%</span>
+            </div>
         </div>
     </div>
+
+    <!--Uploaded image screen-->
+    <div class="uploaded-image" id="uploaded-image">
+        <img src="images/ok.png" alt="OK" id="ok-image">
+        <h2>Uploaded Successfully!</h2>
+        <div class="uploaded-image-show"></div>
+        <input type="text" value="" id="linkForDownloading">
+        <button onclick="copyToClipboard()" id="button-copy">Copy text</button>
+        <button onclick="goHome()" id="button-home">Upload One More</button>
+    </div>
+
 
     <script src="/js/main.js"></script>
 
