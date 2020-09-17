@@ -100,7 +100,6 @@ function initializeDragAndDropArea() {
 
 function writeLinkToField(fileName) {
     let selfUrl = window.location.href;
-    console.log(selfUrl);
     linkForDownloading.value = selfUrl + apiGetUrl + fileName;
 }
 
