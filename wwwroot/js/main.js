@@ -27,7 +27,6 @@ function transferWithAjax(url, formData, fileName) {
                     percent = (event.loaded / event.total) * 100;
 
                     progressBarFill.style.width = percent.toFixed(2) + "%";
-                    progressBarText.textContent = percent.toFixed(2) + "%"
                 }
                 percent = 0;
             }, false);
