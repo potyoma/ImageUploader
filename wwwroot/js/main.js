@@ -1,4 +1,4 @@
-const apiUrl = window.location.href + "/api/uploads";
+const apiUrl = window.location.href + "api/uploads";
 const apiGetUrl = "api/get/";
 const progressBar = document.getElementById("progress-bar-screen")
 const uploadedImageScreen = document.getElementById("uploaded-image");
@@ -36,7 +36,7 @@ function transferWithAjax(url, formData, fileName) {
         success: function (data) {
             progressBar.style.display = "none";
             uploadedImageScreen.style.display = "block";
-            uploadedImageShow.style.backgroundImage = "url('Files/" + fileName + "')"
+            uploadedImageShow.style.backgroundImage = "url('../Files/" + fileName + "')"
         }
     });
 }
@@ -51,6 +51,7 @@ function uploadFiles(inputId) {
     formData.append("uploadedFile", file);
     mainScreen.style.display = "none";
     progressBar.style.display = "block";
+
     transferWithAjax(apiUrl, formData, file.name);
 }
 
