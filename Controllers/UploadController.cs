@@ -11,10 +11,13 @@ namespace TryingWebApi.Controllers
     public class UploadsController : ControllerBase
     {
         private readonly IWebHostEnvironment _environment;
+        private readonly string _path;
 
         public UploadsController(IWebHostEnvironment environment)
         {
             _environment = environment;
+            _path = $"{_environment.WebRootPath}/Files";
+            FindOrCreateDirectory();
         }
 
         [HttpPost]
@@ -22,11 +25,8 @@ namespace TryingWebApi.Controllers
         {
             if (uploadedFile != null)
             {
-                string path =
-                    $"{_environment.WebRootPath}/Files/{uploadedFile.FileName}";
-
                 using (var fileStream = new FileStream(
-                    path, FileMode.Create))
+                    $"{_path}/{uploadedFile.FileName}", FileMode.Create))
                 {
                     await uploadedFile.CopyToAsync(fileStream);
                 }
@@ -35,6 +35,14 @@ namespace TryingWebApi.Controllers
             }
 
             return BadRequest("File is empty");
+        }
+
+        private void FindOrCreateDirectory()
+        {
+            if (!Directory.Exists(_path))
+            {
+                Directory.CreateDirectory(_path);
+            }
         }
     }
 }
