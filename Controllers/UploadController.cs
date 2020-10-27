@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
 using System.IO;
+using TryingWebApi.Models;
 
 namespace TryingWebApi.Controllers
 {
