@@ -5,7 +5,7 @@ const uploadedImageScreen = document.getElementById("uploaded-image");
 const mainScreen = document.getElementById("main-card");
 const uploadedImageShow = document.getElementsByClassName("uploaded-image-show")[0];
 const progressBarFill = document.querySelector(
-    "#progressBar > .progress-bar-fill");
+    "#progressBar > .progress-bar");
 const progressBarText = progressBarFill.querySelector(".progress-bar-text");
 const mimeTypes = ["image/jpeg", "image/gif", "image/png", "image/svg+xml"];
 const linkForDownloading = document.getElementById("linkForDownloading");
@@ -25,8 +25,7 @@ function transferWithAjax(url, formData, fileName) {
 
                 if (event.lengthComputable) {
                     percent = (event.loaded / event.total) * 100;
-
-                    progressBarFill.style.width = percent.toFixed(2) + "%";
+                    progressBarFill.setAttribute('aria-valuenow') = percent.toFixed(2);
                 }
                 percent = 0;
             }, false);
